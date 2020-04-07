@@ -6,3 +6,7 @@
 .gradle
 build
 
+# Project files
+!export.pdf
+SimpleTest.java
+

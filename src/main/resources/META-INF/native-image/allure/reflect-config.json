@@ -1,0 +1,82 @@
+[
+  {
+    "name" : "java.util.Map",
+    "allDeclaredConstructors" : true,
+    "allPublicConstructors" : true,
+    "allDeclaredMethods" : true,
+    "allDeclaredFields" : true,
+    "allPublicMethods" : true
+  },
+  {
+    "name" : "java.util.HashMap",
+    "allDeclaredConstructors" : true,
+    "allPublicConstructors" : true,
+    "allDeclaredMethods" : true,
+    "allDeclaredFields" : true,
+    "allPublicMethods" : true
+  },
+  {
+    "name" : "java.util.ArrayList",
+    "allDeclaredConstructors" : true,
+    "allPublicConstructors" : true,
+    "allDeclaredMethods" : true,
+    "allDeclaredFields" : true,
+    "allPublicMethods" : true
+  },
+  {
+    "name" : "io.qameta.allure.model.TestResult",
+    "allDeclaredConstructors" : true,
+    "allPublicConstructors" : true,
+    "allDeclaredMethods" : true,
+    "allDeclaredFields" : true,
+    "allPublicMethods" : true
+  },
+  {
+    "name" : "io.qameta.allure.model.Label",
+    "allDeclaredConstructors" : true,
+    "allPublicConstructors" : true,
+    "allDeclaredMethods" : true,
+    "allDeclaredFields" : true,
+    "allPublicMethods" : true
+  },
+  {
+    "name" : "io.qameta.allure.model.StepResult",
+    "allDeclaredConstructors" : true,
+    "allPublicConstructors" : true,
+    "allDeclaredMethods" : true,
+    "allDeclaredFields" : true,
+    "allPublicMethods" : true
+  },
+  {
+    "name" : "io.qameta.allure.model.Attachment",
+    "allDeclaredConstructors" : true,
+    "allPublicConstructors" : true,
+    "allDeclaredMethods" : true,
+    "allDeclaredFields" : true,
+    "allPublicMethods" : true
+  },
+  {
+    "name" : "io.qameta.allure.model.Status",
+    "allDeclaredConstructors" : true,
+    "allPublicConstructors" : true,
+    "allDeclaredMethods" : true,
+    "allDeclaredFields" : true,
+    "allPublicMethods" : true
+  },
+  {
+    "name" : "io.qameta.allure.model.StatusDetails",
+    "allDeclaredConstructors" : true,
+    "allPublicConstructors" : true,
+    "allDeclaredMethods" : true,
+    "allDeclaredFields" : true,
+    "allPublicMethods" : true
+  },
+  {
+    "name" : "io.qameta.allure.model.Stage",
+    "allDeclaredConstructors" : true,
+    "allPublicConstructors" : true,
+    "allDeclaredMethods" : true,
+    "allDeclaredFields" : true,
+    "allPublicMethods" : true
+  }
+]

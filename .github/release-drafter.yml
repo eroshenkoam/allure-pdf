@@ -12,5 +12,5 @@ template: |
 
   ## 👀 Links
 
-  [Commits since $PREVIOUS_TAG](https://github.com/eroshenkoam/xcresults/compare/$PREVIOUS_TAG...master)
+  [Commits since $PREVIOUS_TAG](https://github.com/eroshenkoam/allure-pdf/compare/$PREVIOUS_TAG...master)
   

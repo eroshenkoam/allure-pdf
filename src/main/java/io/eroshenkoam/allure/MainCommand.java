@@ -81,17 +81,18 @@ public class MainCommand implements Runnable {
             Files.createFile(outputPath);
         }
 
+        final FontHolder fontHolder = loadArialFont();
         final List<Path> files = Files.walk(reportPath)
                 .filter(s -> s.toString().endsWith("-result.json"))
                 .collect(Collectors.toList());
         log("Found [%s] rest results ...", files.size());
 
         try (final Document document = new Document(PageSize.A4)) {
-            final PdfWriter writer = PdfWriter.getInstance(document, Files.newOutputStream(outputPath));
-            final FontHolder fontHolder = loadArialFont();
-            document.open();
-            addTitlePage(document, "Simple report", DATE_FORMAT, fontHolder);
+            PdfWriter.getInstance(document, Files.newOutputStream(outputPath));
             document.newPage();
+            document.open();
+
+            addTitlePage(document, "Simple report", DATE_FORMAT, fontHolder);
             final Paragraph tableHeader = new Paragraph("Test Details", fontHolder.header2());
             addEmptyLine(tableHeader, 2);
             document.add(tableHeader);
@@ -123,11 +124,8 @@ public class MainCommand implements Runnable {
                                         final FontHolder fontHolder) {
         final Paragraph details = new Paragraph();
         addTestResultHeader(testResult, fontHolder, details);
-        details.add(Chunk.NEWLINE);
         addCustomFieldsSection(testResult, fontHolder, details);
-        details.add(Chunk.NEWLINE);
         addSteps(testResult, fontHolder, details);
-        details.add(Chunk.NEWLINE);
         document.add(details);
     }
 
@@ -135,7 +133,7 @@ public class MainCommand implements Runnable {
                                      final Paragraph details) {
         final Chunk testResultName = new Chunk(testResult.getName(), fontHolder.header3());
         final Paragraph testResultStatus = new Paragraph(testResultName);
-        testResultStatus.add(String.format(" %s", new Phrase(testResult.getStatus().name())));
+        testResultStatus.add(String.format("%s", new Phrase(testResult.getStatus().name())));
         details.add(testResultStatus);
     }
 
@@ -176,7 +174,7 @@ public class MainCommand implements Runnable {
                 final String attachmentTitle = String.format("%s (%s)", attach.getName(), attach.getType());
                 final ListItem attachmentItem = new ListItem(attachmentTitle, font);
                 final com.lowagie.text.List content = new com.lowagie.text.List(false);
-                for (final String line: readFile(attach)) {
+                for (final String line : readFile(attach)) {
                     content.add(new ListItem(line, font));
                 }
                 attachmentItem.add(content);

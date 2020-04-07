@@ -27,7 +27,9 @@ dependencies {
     annotationProcessor("info.picocli:picocli-codegen:4.1.4")
 
     implementation("com.fasterxml.jackson.core:jackson-databind:2.10.2")
+    implementation("org.apache.commons:commons-collections4:4.4")
     implementation("io.qameta.allure:allure-model:2.13.1")
+    implementation("com.github.librepdf:openpdf:1.3.13")
     implementation("info.picocli:picocli:4.1.4")
     implementation("commons-io:commons-io:2.6")
 

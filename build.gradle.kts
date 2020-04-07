@@ -16,7 +16,7 @@ graal {
     graalVersion(project.property("graalVersion") as String?)
 
     mainClass("io.eroshenkoam.allure.AllurePDF")
-    outputName("xcresults")
+    outputName("allure-pdf")
 }
 
 repositories {

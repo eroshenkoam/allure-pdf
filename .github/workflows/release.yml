@@ -13,6 +13,9 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 1.8
+      - name: Collect Meta
+        id: meta
+        run: echo ::set-output name=VERSION::${GITHUB_REF:10}
       - name: "Build"
         run: ./gradlew build -Pversion=${GITHUB_REF:10}
       - name: "Upload Zip"
@@ -21,8 +24,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ github.event.release.upload_url }}
-          asset_path: ./build/distribution/allure-pdf-${GITHUB_REF:10}.zip
-          asset_name: allure-pdf-${GITHUB_REF:10}.zip
+          asset_path: ./build/distribution/allure-pdf-${{ steps.meta.outputs.VERSION }}.zip
+          asset_name: allure-pdf-${{ steps.meta.outputs.VERSION }}.zip
           asset_content_type: application/octet-stream
       - name: "Upload Tar"
         uses: actions/upload-release-asset@v1.0.1
@@ -30,8 +33,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ github.event.release.upload_url }}
-          asset_path: ./build/distribution/allure-pdf-${GITHUB_REF:10}.tar
-          asset_name: allure-pdf-${GITHUB_REF:10}.tar
+          asset_path: ./build/distribution/allure-pdf-${{ steps.meta.outputs.VERSION }}.tar
+          asset_name: allure-pdf-${{ steps.meta.outputs.VERSION }}.tar
           asset_content_type: application/octet-stream
       - name: "Build Native Image"
         run: ./gradlew nativeImage -Pversion=${GITHUB_REF:10}

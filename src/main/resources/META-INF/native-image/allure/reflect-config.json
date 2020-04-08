@@ -40,6 +40,22 @@
     "allPublicMethods" : true
   },
   {
+    "name" : "io.qameta.allure.model.Link",
+    "allDeclaredConstructors" : true,
+    "allPublicConstructors" : true,
+    "allDeclaredMethods" : true,
+    "allDeclaredFields" : true,
+    "allPublicMethods" : true
+  },
+  {
+    "name" : "io.qameta.allure.model.Parameter",
+    "allDeclaredConstructors" : true,
+    "allPublicConstructors" : true,
+    "allDeclaredMethods" : true,
+    "allDeclaredFields" : true,
+    "allPublicMethods" : true
+  },
+  {
     "name" : "io.qameta.allure.model.StepResult",
     "allDeclaredConstructors" : true,
     "allPublicConstructors" : true,

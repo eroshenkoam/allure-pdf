@@ -24,7 +24,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ github.event.release.upload_url }}
-          asset_path: ./build/distribution/allure-pdf-${{ steps.meta.outputs.VERSION }}.zip
+          asset_path: ./build/distributions/allure-pdf-${{ steps.meta.outputs.VERSION }}.zip
           asset_name: allure-pdf-${{ steps.meta.outputs.VERSION }}.zip
           asset_content_type: application/octet-stream
       - name: "Upload Tar"
@@ -33,7 +33,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ github.event.release.upload_url }}
-          asset_path: ./build/distribution/allure-pdf-${{ steps.meta.outputs.VERSION }}.tar
+          asset_path: ./build/distributions/allure-pdf-${{ steps.meta.outputs.VERSION }}.tar
           asset_name: allure-pdf-${{ steps.meta.outputs.VERSION }}.tar
           asset_content_type: application/octet-stream
       - name: "Build Native Image"

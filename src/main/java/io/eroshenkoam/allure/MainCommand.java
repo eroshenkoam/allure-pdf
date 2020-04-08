@@ -10,6 +10,7 @@ import com.lowagie.text.PageSize;
 import com.lowagie.text.Paragraph;
 import com.lowagie.text.Phrase;
 import com.lowagie.text.pdf.PdfWriter;
+import io.eroshenkoam.allure.util.PdfUtil;
 import io.qameta.allure.model.Attachment;
 import io.qameta.allure.model.Label;
 import io.qameta.allure.model.StepResult;
@@ -57,6 +58,13 @@ public class MainCommand implements Runnable {
     )
     protected Path outputPath;
 
+    @CommandLine.Option(
+            names = {"-n", "--name"},
+            defaultValue = "Generated report",
+            description = "Report name"
+    )
+    protected String reportName;
+
     @Override
     public void run() {
         try {
@@ -92,10 +100,13 @@ public class MainCommand implements Runnable {
             document.newPage();
             document.open();
 
-            addTitlePage(document, "Simple report", DATE_FORMAT, fontHolder);
+            addTitlePage(document, reportName, DATE_FORMAT, fontHolder);
+
+            document.newPage();
             final Paragraph tableHeader = new Paragraph("Test Details", fontHolder.header2());
             addEmptyLine(tableHeader, 2);
             document.add(tableHeader);
+
             for (Path path : files) {
                 final TestResult result = new ObjectMapper().readValue(path.toFile(), TestResult.class);
                 printTestResultDetails(document, result, fontHolder);
@@ -124,7 +135,9 @@ public class MainCommand implements Runnable {
                                         final FontHolder fontHolder) {
         final Paragraph details = new Paragraph();
         addTestResultHeader(testResult, fontHolder, details);
+        details.add(PdfUtil.createEmptyLine());
         addCustomFieldsSection(testResult, fontHolder, details);
+        details.add(PdfUtil.createEmptyLine());
         addSteps(testResult, fontHolder, details);
         document.add(details);
     }

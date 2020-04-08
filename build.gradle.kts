@@ -1,5 +1,6 @@
 plugins {
     java
+    application
     id("com.palantir.graal") version("0.6.0")
 }
 
@@ -10,6 +11,25 @@ description = "Allure Server Java Client"
 
 tasks.withType(Wrapper::class) {
     gradleVersion = "6.1.1"
+}
+
+application {
+    mainClassName = "io.eroshenkoam.allure.AllurePDF"
+}
+
+val startScripts by tasks.existing(CreateStartScripts::class) {
+    applicationName = "allure-pdf"
+    classpath = classpath?.plus(files("src/lib/config"))
+    doLast {
+        unixScript.writeText(unixScript.readText()
+                .replace(Regex("(?m)^APP_HOME="), "export APP_HOME=")
+                .replace("\$(uname)\" = \"Darwin", "")
+        )
+    }
+}
+
+tasks.build {
+    dependsOn(tasks.installDist)
 }
 
 graal {

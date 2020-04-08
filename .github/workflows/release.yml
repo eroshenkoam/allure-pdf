@@ -14,9 +14,27 @@ jobs:
         with:
           java-version: 1.8
       - name: "Build"
-        run: ./gradlew build
+        run: ./gradlew build -Pversion=${GITHUB_REF:10}
+      - name: "Upload Zip"
+        uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: ./build/distribution/allure-pdf-${GITHUB_REF:10}.zip
+          asset_name: allure-pdf-${GITHUB_REF:10}.zip
+          asset_content_type: application/octet-stream
+      - name: "Upload Tar"
+        uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: ./build/distribution/allure-pdf-${GITHUB_REF:10}.tar
+          asset_name: allure-pdf-${GITHUB_REF:10}.tar
+          asset_content_type: application/octet-stream
       - name: "Build Native Image"
-        run: ./gradlew nativeImage
+        run: ./gradlew nativeImage -Pversion=${GITHUB_REF:10}
       - name: "Upload Native Image"
         uses: actions/upload-release-asset@v1.0.1
         env:

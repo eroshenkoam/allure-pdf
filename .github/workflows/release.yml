@@ -36,14 +36,3 @@ jobs:
           asset_path: ./build/distributions/allure-pdf-${{ steps.meta.outputs.VERSION }}.tar
           asset_name: allure-pdf-${{ steps.meta.outputs.VERSION }}.tar
           asset_content_type: application/octet-stream
-      - name: "Build Native Image"
-        run: ./gradlew nativeImage -Pversion=${GITHUB_REF:10}
-      - name: "Upload Native Image"
-        uses: actions/upload-release-asset@v1.0.1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: ./build/graal/allure-pdf
-          asset_name: allure-pdf
-          asset_content_type: application/octet-stream

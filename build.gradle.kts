@@ -1,7 +1,6 @@
 plugins {
     java
     application
-    id("com.palantir.graal") version("0.6.0")
 }
 
 group = "org.example"
@@ -29,21 +28,6 @@ val startScripts by tasks.existing(CreateStartScripts::class) {
 
 tasks.build {
     dependsOn(tasks.installDist)
-}
-
-graal {
-    graalVersion(project.property("graalVersion") as String?)
-
-    option("-H:+JNI")
-    option("-H:+AddAllCharsets")
-    option("-H:IncludeResources=assets/fonts/arial.ttf")
-    option("-H:IncludeResources=org/apache/xmlgraphics/fonts/zapfdingbats.txt")
-    option("-H:IncludeResources=org/apache/xmlgraphics/fonts/glyphlist.txt")
-
-    option("--no-fallback")
-
-    mainClass("io.eroshenkoam.allure.AllurePDF")
-    outputName("allure-pdf")
 }
 
 repositories {

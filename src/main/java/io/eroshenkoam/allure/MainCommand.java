@@ -116,9 +116,9 @@ public class MainCommand implements Runnable {
                 final Map<String, List<String>> labels = result.getLabels().stream().collect(
                         Collectors.groupingBy(Label::getName, Collectors.mapping(Label::getValue, Collectors.toList()))
                 );
-                final boolean shouldSkip = Objects.nonNull(filter) && !filter.isEmpty() && filter.entrySet().stream()
-                        .noneMatch(e -> labels.getOrDefault(e.getKey(), new ArrayList<>()).contains(e.getValue()));
-                System.out.println(shouldSkip);
+                boolean shouldSkip = Objects.nonNull(filter)
+                        && !filter.isEmpty()
+                        && !filter.entrySet().stream().allMatch(e -> labels.getOrDefault(e.getKey(), new ArrayList<>()).contains(e.getValue()));
                 if (!shouldSkip) {
                     printTestResultDetails(document, result, fontHolder);
                 }

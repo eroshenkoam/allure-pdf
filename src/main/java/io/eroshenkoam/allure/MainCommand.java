@@ -134,6 +134,7 @@ public class MainCommand implements Runnable {
                                         final TestResult testResult,
                                         final FontHolder fontHolder) {
         final Paragraph details = new Paragraph();
+        details.add(PdfUtil.createEmptyLine());
         addTestResultHeader(testResult, fontHolder, details);
         details.add(PdfUtil.createEmptyLine());
         addCustomFieldsSection(testResult, fontHolder, details);
@@ -188,7 +189,7 @@ public class MainCommand implements Runnable {
                 final ListItem attachmentItem = new ListItem(attachmentTitle, font);
                 final com.lowagie.text.List content = new com.lowagie.text.List(false);
                 for (final String line : readFile(attach)) {
-                    content.add(new ListItem(line, font));
+                    content.add(new ListItem(line.replace("\t", " "), font));
                 }
                 attachmentItem.add(content);
                 attachments.add(attachmentItem);

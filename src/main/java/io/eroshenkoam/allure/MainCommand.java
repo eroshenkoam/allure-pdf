@@ -26,6 +26,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -64,6 +65,9 @@ public class MainCommand implements Runnable {
             description = "Report name"
     )
     protected String reportName;
+
+    @CommandLine.Option(names = {"-f", "--filter"})
+    Map<String, String> filter;
 
     @Override
     public void run() {
@@ -109,7 +113,15 @@ public class MainCommand implements Runnable {
 
             for (Path path : files) {
                 final TestResult result = new ObjectMapper().readValue(path.toFile(), TestResult.class);
-                printTestResultDetails(document, result, fontHolder);
+                final Map<String, List<String>> labels = result.getLabels().stream().collect(
+                        Collectors.groupingBy(Label::getName, Collectors.mapping(Label::getValue, Collectors.toList()))
+                );
+                final boolean shouldSkip = Objects.nonNull(filter) && !filter.isEmpty() && filter.entrySet().stream()
+                        .noneMatch(e -> labels.getOrDefault(e.getKey(), new ArrayList<>()).contains(e.getValue()));
+                System.out.println(shouldSkip);
+                if (!shouldSkip) {
+                    printTestResultDetails(document, result, fontHolder);
+                }
             }
         }
     }

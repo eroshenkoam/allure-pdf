@@ -1,4 +1,4 @@
-package io.eroshenkoam.allure;
+package io.github.eroshenkoam.allure;
 
 import picocli.CommandLine;
 

@@ -1,4 +1,4 @@
-package io.eroshenkoam.allure.util;
+package io.github.eroshenkoam.allure.util;
 
 import io.qameta.allure.model.Status;
 

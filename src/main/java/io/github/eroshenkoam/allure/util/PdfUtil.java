@@ -1,4 +1,4 @@
-package io.eroshenkoam.allure.util;
+package io.github.eroshenkoam.allure.util;
 
 import com.lowagie.text.Element;
 import com.lowagie.text.Paragraph;

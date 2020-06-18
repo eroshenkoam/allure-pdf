@@ -4,7 +4,7 @@ plugins {
     id("com.jfrog.bintray") version "1.8.5"
 }
 
-group = "org.example"
+group = "io.github.eroshenkoam"
 
 description = "Allure PDF"
 
@@ -15,7 +15,7 @@ tasks.withType(Wrapper::class) {
 }
 
 application {
-    mainClassName = "io.eroshenkoam.allure.AllurePDF"
+    mainClassName = "io.github.eroshenkoam.allure.AllurePDF"
 }
 
 repositories {

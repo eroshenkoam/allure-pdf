@@ -1,4 +1,4 @@
-package io.eroshenkoam.allure;
+package io.github.eroshenkoam.allure;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lowagie.text.Chunk;
@@ -10,7 +10,7 @@ import com.lowagie.text.PageSize;
 import com.lowagie.text.Paragraph;
 import com.lowagie.text.Phrase;
 import com.lowagie.text.pdf.PdfWriter;
-import io.eroshenkoam.allure.util.PdfUtil;
+import io.github.eroshenkoam.allure.util.PdfUtil;
 import io.qameta.allure.model.Attachment;
 import io.qameta.allure.model.Label;
 import io.qameta.allure.model.StepResult;
@@ -33,8 +33,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import static io.eroshenkoam.allure.FontHolder.loadArialFont;
-import static io.eroshenkoam.allure.util.PdfUtil.addEmptyLine;
+import static io.github.eroshenkoam.allure.FontHolder.loadArialFont;
+import static io.github.eroshenkoam.allure.util.PdfUtil.addEmptyLine;
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.mapping;

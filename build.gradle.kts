@@ -1,11 +1,14 @@
 plugins {
     java
     application
+    id("com.jfrog.bintray") version "1.8.5"
 }
 
 group = "org.example"
 
-description = "Allure Server Java Client"
+description = "Allure PDF"
+
+val gradleScriptDir by extra("${rootProject.projectDir}/gradle")
 
 tasks.withType(Wrapper::class) {
     gradleVersion = "6.1.1"
@@ -13,21 +16,6 @@ tasks.withType(Wrapper::class) {
 
 application {
     mainClassName = "io.eroshenkoam.allure.AllurePDF"
-}
-
-val startScripts by tasks.existing(CreateStartScripts::class) {
-    applicationName = "allure-pdf"
-    classpath = classpath?.plus(files("src/lib/config"))
-    doLast {
-        unixScript.writeText(unixScript.readText()
-                .replace(Regex("(?m)^APP_HOME="), "export APP_HOME=")
-                .replace("\$(uname)\" = \"Darwin", "")
-        )
-    }
-}
-
-tasks.build {
-    dependsOn(tasks.installDist)
 }
 
 repositories {
@@ -57,4 +45,40 @@ dependencies {
     implementation("commons-io:commons-io:2.6")
 
     testImplementation("junit:junit:4.12")
+}
+
+val sourceJar by tasks.creating(Jar::class) {
+    from(sourceSets.getByName("main").allSource)
+    archiveClassifier.set("sources")
+}
+
+val javadocJar by tasks.creating(Jar::class) {
+    from(tasks.getByName("javadoc"))
+    archiveClassifier.set("javadoc")
+}
+
+apply(from = "$gradleScriptDir/bintray.gradle")
+apply(from = "$gradleScriptDir/maven.gradle")
+
+
+artifacts.add("archives", sourceJar)
+artifacts.add("archives", javadocJar)
+
+tasks.withType(Javadoc::class) {
+    (options as StandardJavadocDocletOptions).addStringOption("Xdoclint:none", "-quiet")
+}
+
+val startScripts by tasks.existing(CreateStartScripts::class) {
+    applicationName = "allure-pdf"
+    classpath = classpath?.plus(files("src/lib/config"))
+    doLast {
+        unixScript.writeText(unixScript.readText()
+                .replace(Regex("(?m)^APP_HOME="), "export APP_HOME=")
+                .replace("\$(uname)\" = \"Darwin", "")
+        )
+    }
+}
+
+tasks.build {
+    dependsOn(tasks.installDist)
 }

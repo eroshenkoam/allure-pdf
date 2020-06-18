@@ -1,4 +1,4 @@
-package io.eroshenkoam.allure;
+package io.github.eroshenkoam.allure;
 
 import com.lowagie.text.Font;
 import com.lowagie.text.pdf.BaseFont;

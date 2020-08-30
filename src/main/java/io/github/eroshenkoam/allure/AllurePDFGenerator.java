@@ -54,7 +54,9 @@ public class AllurePDFGenerator {
     }
 
     public void filter(final Map<String, String> tags) {
-        this.filter.putAll(tags);
+        if (tags != null) {
+            this.filter.putAll(tags);
+        }
     }
 
     public void generate(final Path outputPath) throws IOException {
@@ -98,9 +100,8 @@ public class AllurePDFGenerator {
                 boolean shouldSkip = Objects.nonNull(filter)
                         && !filter.isEmpty()
                         && !filter.entrySet().stream().allMatch(e -> labels.getOrDefault(e.getKey(), new ArrayList<>()).contains(e.getValue()));
-                if (!shouldSkip) {
-                    printTestResultDetails(document, result, fontHolder);
-                }
+                if (shouldSkip) continue;
+                printTestResultDetails(document, result, fontHolder);
             }
         }
     }

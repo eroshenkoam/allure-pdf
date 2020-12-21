@@ -35,7 +35,7 @@ dependencies {
 
     implementation("com.google.code.findbugs:jsr305:3.0.2")
 
-    implementation("com.github.librepdf:openpdf:1.3.13")
+    implementation("com.github.librepdf:openpdf:1.3.26")
     implementation("org.apache.xmlgraphics:fop:2.4") {
         exclude(group = "com.sun.media", module = "jai-codec")
         exclude(group = "javax.media", module = "jai-core")

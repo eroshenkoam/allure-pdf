@@ -13,6 +13,7 @@ import com.lowagie.text.pdf.PdfWriter;
 import io.github.eroshenkoam.allure.util.PdfUtil;
 import io.qameta.allure.model.Attachment;
 import io.qameta.allure.model.Label;
+import io.qameta.allure.model.StatusDetails;
 import io.qameta.allure.model.StepResult;
 import io.qameta.allure.model.TestResult;
 import org.apache.commons.collections4.CollectionUtils;
@@ -34,6 +35,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static io.github.eroshenkoam.allure.FontHolder.loadArialFont;
+import static io.github.eroshenkoam.allure.util.ColorUtils.statusTextColor;
 import static io.github.eroshenkoam.allure.util.PdfUtil.addEmptyLine;
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.joining;
@@ -162,33 +164,39 @@ public class AllurePDFGenerator {
     private void addSteps(final TestResult testResult, final FontHolder fontHolder, final Paragraph details) {
         if (Objects.nonNull(testResult.getSteps())) {
             details.add(new Paragraph("Scenario", fontHolder.header4()));
-            final com.lowagie.text.List list = new com.lowagie.text.List(true);
-            testResult.getSteps().stream()
-                    .map(step -> createStepItem(step, fontHolder))
-                    .forEach(list::add);
-            details.add(list);
+            details.add(createStepsList(testResult.getSteps(), fontHolder));
         }
     }
 
-    private ListItem createStepItem(final StepResult step, final FontHolder fontHolder) {
-        final Font font = fontHolder.normal();
-        final String stepTitle = String.format("%s [%s]", step.getName(), step.getStatus());
-        final ListItem stepItem = new ListItem(stepTitle, font);
-        if (Objects.nonNull(step.getAttachments())) {
-            final com.lowagie.text.List attachments = new com.lowagie.text.List(false, false);
-            for (final Attachment attach : step.getAttachments()) {
-                final String attachmentTitle = String.format("%s (%s)", attach.getName(), attach.getType());
-                final ListItem attachmentItem = new ListItem(attachmentTitle, font);
-                final com.lowagie.text.List content = new com.lowagie.text.List(false);
-                for (final String line : readFile(attach)) {
-                    content.add(new ListItem(line.replace("\t", " "), font));
-                }
-                attachmentItem.add(content);
-                attachments.add(attachmentItem);
+    private com.lowagie.text.List createStepsList(final List<StepResult> steps, final FontHolder fontHolder) {
+        final com.lowagie.text.List stepList = new com.lowagie.text.List(true);
+        steps.forEach(step -> {
+            final Font font = fontHolder.normal(statusTextColor(step.getStatus()));
+            final ListItem stepItem = new ListItem(String.format("%s", step.getName()), font);
+            final StatusDetails statusDetails = step.getStatusDetails();
+            if (Objects.nonNull(statusDetails) && Objects.nonNull(statusDetails.getMessage())) {
+                stepItem.add(new Paragraph(statusDetails.getMessage(), font));
             }
-            stepItem.add(attachments);
-        }
-        return stepItem;
+            if (Objects.nonNull(step.getSteps())) {
+                stepItem.add(createStepsList(step.getSteps(), fontHolder));
+            }
+            if (Objects.nonNull(step.getAttachments())) {
+                final com.lowagie.text.List attachments = new com.lowagie.text.List(false, false);
+                for (final Attachment attach : step.getAttachments()) {
+                    final String attachmentTitle = String.format("%s (%s)", attach.getName(), attach.getType());
+                    final ListItem attachmentItem = new ListItem(attachmentTitle, font);
+                    final com.lowagie.text.List content = new com.lowagie.text.List(false);
+                    for (final String line : readFile(attach)) {
+                        content.add(new ListItem(line.replace("\t", " "), font));
+                    }
+                    attachmentItem.add(content);
+                    attachments.add(attachmentItem);
+                }
+                stepItem.add(attachments);
+            }
+            stepList.add(stepItem);
+        });
+        return stepList;
     }
 
     private List<String> readFile(final Attachment attachment) {

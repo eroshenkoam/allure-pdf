@@ -57,7 +57,6 @@ val javadocJar by tasks.creating(Jar::class) {
     archiveClassifier.set("javadoc")
 }
 
-apply(from = "$gradleScriptDir/bintray.gradle")
 apply(from = "$gradleScriptDir/maven.gradle")
 
 

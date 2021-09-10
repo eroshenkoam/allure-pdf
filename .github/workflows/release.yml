@@ -18,11 +18,6 @@ jobs:
         run: echo ::set-output name=VERSION::${GITHUB_REF:10}
       - name: "Build"
         run: ./gradlew build -Pversion=${GITHUB_REF:10}
-      - name: "Publish"
-        run: ./gradlew bintrayUpload -Pversion=${GITHUB_REF:10}
-        env:
-          BINTRAY_USER: ${{ secrets.BINTRAY_USER }}
-          BINTRAY_API_KEY: ${{ secrets.BINTRAY_API_KEY }}
       - name: "Upload Zip"
         uses: actions/upload-release-asset@v1.0.1
         env:

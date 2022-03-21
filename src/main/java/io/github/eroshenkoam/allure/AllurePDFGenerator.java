@@ -35,7 +35,6 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static io.github.eroshenkoam.allure.FontHolder.loadArialFont;
-import static io.github.eroshenkoam.allure.util.ColorUtils.statusTextColor;
 import static io.github.eroshenkoam.allure.util.PdfUtil.addEmptyLine;
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.joining;
@@ -48,11 +47,13 @@ public class AllurePDFGenerator {
     private final String reportName;
     private final Path reportPath;
     private final Map<String, String> filter;
+    private final StatusColors statusColors;
 
-    public AllurePDFGenerator(final String reportName, final Path reportPath) {
+    public AllurePDFGenerator(final String reportName, final Path reportPath, final StatusColors statusColors) {
         this.filter = new HashMap<>();
         this.reportName = reportName;
         this.reportPath = reportPath;
+        this.statusColors = statusColors;
     }
 
     public void filter(final Map<String, String> tags) {
@@ -171,7 +172,7 @@ public class AllurePDFGenerator {
     private com.lowagie.text.List createStepsList(final List<StepResult> steps, final FontHolder fontHolder) {
         final com.lowagie.text.List stepList = new com.lowagie.text.List(true);
         steps.forEach(step -> {
-            final Font font = fontHolder.normal(statusTextColor(step.getStatus()));
+            final Font font = fontHolder.normal(statusColors.getStatusColor(step.getStatus()));
             final ListItem stepItem = new ListItem(String.format("%s", step.getName()), font);
             final StatusDetails statusDetails = step.getStatusDetails();
             if (Objects.nonNull(statusDetails) && Objects.nonNull(statusDetails.getMessage())) {

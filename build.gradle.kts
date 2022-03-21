@@ -24,6 +24,9 @@ repositories {
 
 dependencies {
     annotationProcessor("info.picocli:picocli-codegen:4.1.4")
+    annotationProcessor("org.projectlombok:lombok:1.18.12")
+
+    compileOnly("org.projectlombok:lombok:1.18.12")
 
     implementation("com.fasterxml.jackson.core:jackson-databind:2.10.2")
     implementation("org.apache.commons:commons-collections4:4.4")
